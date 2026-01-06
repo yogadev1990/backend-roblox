@@ -17,7 +17,7 @@ const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 // ⚠️ PERUBAHAN PENTING UNTUK DOCKER:
 // Hostname ganti jadi 'mongo' (sesuai nama service di docker-compose)
 // ==========================================================
-mongoose.connect('mongodb://mongo:27017/dental_sim_db') 
+mongoose.connect(process.env.MONGO_URI) 
   .then(() => console.log('✅ MongoDB Connected (Docker Internal)'))
   .catch(err => console.log('❌ DB Error:', err));
 
