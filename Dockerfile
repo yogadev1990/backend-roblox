@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Buka port 3000
-EXPOSE 3000
+EXPOSE 4321
 
 # Jalanin servernya
 CMD ["node", "server.js"]
