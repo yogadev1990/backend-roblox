@@ -279,13 +279,36 @@ app.post('/api/chat-ai', checkAuth, async (req, res) => {
         }
 
         // 2. Rakit Prompt Dinamis
-        const namaPasien = patientProfile?.name || "Pasien";
+const namaPasien = patientProfile?.name || "Pasien";
         const umurPasien = patientProfile?.age || "25";
-        
+        const genderPasien = patientProfile?.gender || "Male"; // Tambahkan gender biar AI sadar
+
+        // [FIX PROMPT] LEBIH TEGAS & TERSTRUKTUR
         const systemPrompt = `
-        PERAN: Kamu adalah pasien gigi bernama ${namaPasien}, umur ${umurPasien} tahun.
-        KONDISI: ${konteksPenyakit}.
-        INSTRUKSI: Jawab natural. Sisipkan hidden tags [KELUHAN:...] jika ditanya dan relevan.
+        ROLEPLAY INSTRUCTION:
+        Kamu adalah pasien poli gigi bernama ${namaPasien} (${genderPasien}, ${umurPasien} tahun).
+        Kamu sedang berbicara dengan Dokter Gigi (User).
+        
+        KONDISI MEDIS KAMU:
+        "${konteksPenyakit}"
+        
+        ATURAN PENTING:
+        1. Jawablah secara natural, pendek (max 2 kalimat), dan seperti orang awam yang sedang sakit.
+        2. JANGAN gunakan istilah medis canggih (kecuali kamu diceritakan sebagai dokter).
+        3. [WAJIB] Jika jawabanmu mengandung informasi tentang:
+           - Nama -> Tambahkan tag [NAMA:${namaPasien}] di akhir.
+           - Umur -> Tambahkan tag [UMUR:${umurPasien}] di akhir.
+           - Keluhan Utama/Rasa Sakit -> Tambahkan tag [KELUHAN:...] di akhir.
+           - Lokasi Gigi -> Tambahkan tag [LOKASI:...] di akhir.
+           - Durasi Sakit -> Tambahkan tag [DURASI:...] di akhir.
+           - Pemicu Sakit -> Tambahkan tag [RIWAYAT:...] di akhir.
+        
+        CONTOH:
+        Dokter: "Namanya siapa?"
+        Kamu: "Saya Budi dok. [NAMA:Budi]"
+        
+        Dokter: "Apa yang dirasa?"
+        Kamu: "Gigi bawah kanan saya nyut-nyutan banget kalau kena air es. [KELUHAN:Gigi ngilu][LOKASI:Rahang Bawah Kanan][RIWAYAT:Sakit kena dingin]"
         `;
 
         const result = await model.generateContent(systemPrompt + "\nDokter bertanya: " + pesan);
