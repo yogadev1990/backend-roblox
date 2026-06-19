@@ -26,13 +26,13 @@ mongoose.connect(process.env.MONGO_URI)
 
 // A. MASTER DATA: ITEM (Kamus Alat & Barang)
 const ItemSchema = new mongoose.Schema({
-    itemId: { type: String, required: true, unique: true }, // e.g., "Sonde Half"
-    displayName: String,    // "Sonde Half (Standard)"
-    description: String,    // "Alat diagnostik utama..."
-    icon: String,           // "rbxassetid://..."
+    itemId: { type: String, required: true, unique: true },
+    displayName: String,
+    description: String,
+    icon: String,
     category: { type: String, default: "General" }, 
     price: { type: Number, default: 0 },
-    isBuyable: { type: Boolean, default: true }, // Muncul di Shop?
+    isBuyable: { type: Boolean, default: true },
     rarity: { type: String, default: "Common" }
 });
 
