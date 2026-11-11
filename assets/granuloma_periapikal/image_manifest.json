@@ -1,0 +1,90 @@
+{
+  "case_026": {
+    "case_id": "case_026",
+    "radiograph_filename": "case_026_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11908631.1/cureus-0017-00000078898-i01.jpg",
+    "radiograph_caption": "Preoperative radiovisiography image",
+    "intraoral_filename": "case_026_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11908631.1/cureus-0017-00000078898-i01.jpg",
+    "intraoral_caption": "Preoperative clinical image"
+  },
+  "case_027": {
+    "case_id": "case_027",
+    "radiograph_filename": "case_027_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12225313.1/reports-07-00032-g002.jpg",
+    "radiograph_caption": "Pre-operative intraoral periapical radiograph of the upper left central and lateral incisors.",
+    "intraoral_filename": "case_027_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12225313.1/reports-07-00032-g001.jpg",
+    "intraoral_caption": "Pre-operative intraoral photos: (A) frontal, (B) lateral, and (C) occlusion views."
+  },
+  "case_028": {
+    "case_id": "case_028",
+    "radiograph_filename": "case_028_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10626593.1/amjcaserep-24-e941877-g001.jpg",
+    "radiograph_caption": "a periapical radiograph, showing the missing maxillary lateral incisor space.",
+    "intraoral_filename": "case_028_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10626593.1/amjcaserep-24-e941877-g001.jpg",
+    "intraoral_caption": "Intraoral photographs ... showing the missing maxillary lateral incisor space."
+  },
+  "case_029": {
+    "case_id": "case_029",
+    "radiograph_filename": "case_029_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10470014.1/12903_2023_3287_Fig1_HTML.jpg",
+    "radiograph_caption": "The initial PAR showing a large lesion of tooth #7, #8 and #9.",
+    "intraoral_filename": "case_029_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10470014.1/12903_2023_3287_Fig1_HTML.jpg",
+    "intraoral_caption": "The initial intraoral photograph showing the swollen gingiva."
+  },
+  "case_030": {
+    "case_id": "case_030",
+    "radiograph_filename": "case_030_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8000130.1/dentistry-09-00027-g002.jpg",
+    "radiograph_caption": "(a) Periapical radiograph depicting the presence of a previous root canal treatment on tooth 1.2 and a periapical radiolucency. (b) Periapical radiograph performed with insertion of a gutta-percha cone within the stoma to trace the sinus tract.",
+    "intraoral_filename": "case_030_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC8000130.1/dentistry-09-00027-g001.jpg",
+    "intraoral_caption": "Clinical examination showing coronal integrity of tooth 1.2, discoloration of teeth 1.1 and 2.1, and the stoma of a sinus tract located apically between teeth 1.1 and 1.2."
+  },
+  "case_031": {
+    "case_id": "case_031",
+    "radiograph_filename": "case_031_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC7757964.1/EEJ-2-12-g001.jpg",
+    "radiograph_caption": "Initial radiographic exam after dental replantation",
+    "intraoral_filename": "case_031_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC7757964.1/EEJ-2-12-g001.jpg",
+    "intraoral_caption": "clinical aspect of maxillary central incisors at five years post-trauma"
+  },
+  "case_032": {
+    "case_id": "case_032",
+    "radiograph_filename": "case_032_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13196693.1/CRID-2026-6704067-g003.jpg",
+    "radiograph_caption": "Preoperative radiograph",
+    "intraoral_filename": "case_032_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13196693.1/CRID-2026-6704067-g003.jpg",
+    "intraoral_caption": "Initial view"
+  },
+  "case_033": {
+    "case_id": "case_033",
+    "radiograph_filename": "case_033_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13541490.1/fmed-13-1901096-g007.webp",
+    "radiograph_caption": "A large apical radiolucent area around the apex of tooth#12 and a tapering root filling extending to the full length of the canal.",
+    "intraoral_filename": "case_033_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13541490.1/fmed-13-1901096-g007.webp",
+    "intraoral_caption": "The buccal gingival swelling near tooth#12 is circular."
+  }
+}

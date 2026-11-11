@@ -77,7 +77,23 @@ Semua endpoint dilindungi oleh middleware `checkAuth`. Klien (Roblox) wajib meng
 - **`POST /api/update-progress`**
   - **Fungsi**: Mengupdate Gold dan XP user setelah menyelesaikan misi/kasus.
 
-### E. Admin / Input Data (Seeding)
+### E. Modul Pre-test & Telemetri Waktu Sisi Klien
+- **`POST /api/pretest/start-session`**
+  - **Fungsi**: Memulai sesi Pre-test dengan algoritma *Stratified Random Sampling*. Menghasilkan 9 butir soal seimbang (3 Abses, 3 Granuloma, 3 Kista) yang diacak urutannya (Fisher-Yates) dan mencatat daftar ID kasus yang terpakai agar tidak berulang pada Post-test.
+  - **Body**: `{ playerUserId, robloxUsername }`
+  - **Respons**: `{ success: true, totalSoal: 9, cases: [...] }`
+
+- **`POST /api/pretest/telemetry`**
+  - **Fungsi**: Mencatat telemetri latensi respon waktu per butir soal (Decision Time per Item) yang dihitung dari sisi klien (LocalScript) tepat setelah preload gambar selesai (T0) hingga tombol opsi diklik (T1).
+  - **Body**: `{ playerUserId, robloxUsername, sessionId, caseId, kodeKasus, kategori, jawabanPemain, kunciJawaban, isCorrect, durasiDetik, nomorUrut, timestamp }`
+
+- **`GET /api/pretest/telemetry/:playerUserId`**
+  - **Fungsi**: Mengambil seluruh riwayat log telemetri dan waktu respon dari seorang pemain.
+
+- **`POST /api/admin/seed-cases`**
+  - **Fungsi**: Merombak dan mengimpor ulang seluruh 41 kasus medis dari `dataset.json` ke dalam MongoDB secara otomatis.
+
+### F. Admin / Input Data (Seeding)
 Endpoint untuk memasukkan data master via tools seperti Postman (Membutuhkan `API_SECRET`):
 - `POST /api/items` - Tambah Master Item.
 - `POST /api/medical-case` - Tambah Kasus Medis.
@@ -87,10 +103,15 @@ Endpoint untuk memasukkan data master via tools seperti Postman (Membutuhkan `AP
 
 ---
 
-## 6. Menjalankan Server
+## 6. Menjalankan Server & Seeding Database
 ```bash
 # Instalasi dependencies (jika belum)
 npm install
+
+# Seeding 41 kasus dari dataset.json ke MongoDB
+npm run seed
+# atau
+node seed_cases.js
 
 # Menjalankan server (default port 4321)
 npm start

@@ -1,0 +1,156 @@
+{
+  "case_051": {
+    "case_id": "case_051",
+    "radiograph_filename": "case_051_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13712898.1/cureus-0018-00000117016-i02.webp",
+    "radiograph_caption": "Preoperative intraoral periapical radiographs of the maxillary anterior region demonstrating associated periapical radiolucencies.",
+    "intraoral_filename": "case_051_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13712898.1/cureus-0018-00000117016-i01.webp",
+    "intraoral_caption": "Preoperative intraoral clinical photograph showing Ellis class IV fractures involving teeth 11, 12, 21, and 22."
+  },
+  "case_052": {
+    "case_id": "case_052",
+    "radiograph_filename": "case_052_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10598327.1/cureus-0015-00000045872-i03.jpg",
+    "radiograph_caption": "An intra-oral periapical radiograph revealing a radiolucency along the roots of the deciduous second molar and permanent first molar.",
+    "intraoral_filename": "case_052_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10598327.1/cureus-0015-00000045872-i02.jpg",
+    "intraoral_caption": "Intraoral view showing diffuse swelling in upper right posterior region of jaw."
+  },
+  "case_053": {
+    "case_id": "case_053",
+    "radiograph_filename": "case_053_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13576731.1/jomr-17-e5-g003.webp",
+    "radiograph_caption": "periapical X-ray performed postoperative",
+    "intraoral_filename": "case_053_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13576731.1/jomr-17-e5-g001.webp",
+    "intraoral_caption": "initial intraoral view"
+  },
+  "case_054": {
+    "case_id": "case_054",
+    "radiograph_filename": "case_054_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12721750.1/CRID-2025-8216241-g015.jpg",
+    "radiograph_caption": "Periapical radiograph of the maxillary left lateral incisor indicating a dens invagination Type III B with a large periapical rarefaction and immature apex.",
+    "intraoral_filename": "case_054_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12721750.1/CRID-2025-8216241-g016.jpg",
+    "intraoral_caption": "A gingival swelling due to chronic apical abscess of the maxillary left lateral incisor."
+  },
+  "case_055": {
+    "case_id": "case_055",
+    "radiograph_filename": "case_055_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13568735.1/jmc-17-10-563-g001.webp",
+    "radiograph_caption": "Periapical radiographs of tooth #26 taken before and after root canal treatment (prior to apical surgery).",
+    "intraoral_filename": "case_055_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC13568735.1/jmc-17-10-563-g001.webp",
+    "intraoral_caption": "Preoperative clinical images: occlusal and buccal views, showing white temporary filling material on the occlusal surface."
+  },
+  "case_056": {
+    "case_id": "case_056",
+    "radiograph_filename": "case_056_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11179999.1/cureus-0016-00000060464-i04.jpg",
+    "radiograph_caption": "Intraoral periapical radiograph with 11-13 region.",
+    "intraoral_filename": "case_056_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11179999.1/cureus-0016-00000060464-i01.jpg",
+    "intraoral_caption": "Discolored tooth 11."
+  },
+  "case_057": {
+    "case_id": "case_057",
+    "radiograph_filename": "case_057_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11188004.1/cureus-0016-00000060742-i01.jpg",
+    "radiograph_caption": "RVG of working length with tooth number 11",
+    "intraoral_filename": "case_057_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11188004.1/cureus-0016-00000060742-i01.jpg",
+    "intraoral_caption": "intraoral picture showing discoloration with tooth number 11"
+  },
+  "case_058": {
+    "case_id": "case_058",
+    "radiograph_filename": "case_058_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12456933.1/cureus-0017-00000090866-i04.jpg",
+    "radiograph_caption": "Intraoral x-rays taken after emergency drainage. The lesion extends from the distal portion of the upper central incisor to the canine. The central incisor shows a blunderbuss canal with an open apex.",
+    "intraoral_filename": "case_058_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12456933.1/cureus-0017-00000090866-i02.jpg",
+    "intraoral_caption": "Intraoral manifestation of the lesion with pus, swelling, and pain of the labial mucosa"
+  },
+  "case_059": {
+    "case_id": "case_059",
+    "radiograph_filename": "case_059_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11245126.1/JMAU-12-94-g003.jpg",
+    "radiograph_caption": "Radiographic examination revealed ... (b) intraoral periapical radiograph.",
+    "intraoral_filename": "case_059_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11245126.1/JMAU-12-94-g002.jpg",
+    "intraoral_caption": "Intraoral photograph showing ... (b) left permanent maxillary lateral incisor with a deep palatal pit and slight discoloration"
+  },
+  "case_060": {
+    "case_id": "case_060",
+    "radiograph_filename": "case_060_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12004770.1/12903_2025_5953_Fig2_HTML.jpg",
+    "radiograph_caption": "Preoperative radiograph. Tooth #28 showed periapical radiolucency.",
+    "intraoral_filename": "case_060_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12004770.1/12903_2025_5953_Fig1_HTML.jpg",
+    "intraoral_caption": "A sinus tract on the lingual apical mucosa of tooth #28 (indicated by the white arrow)"
+  },
+  "case_061": {
+    "case_id": "case_061",
+    "radiograph_filename": "case_061_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10618628.1/cureus-0015-00000046341-i02.jpg",
+    "radiograph_caption": "Intra-oral periapical radiograph with 12 showing a large periapical radiolucent shadow",
+    "intraoral_filename": "case_061_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC10618628.1/cureus-0015-00000046341-i01.jpg",
+    "intraoral_caption": "Pre-operative intraoral picture"
+  },
+  "case_062": {
+    "case_id": "case_062",
+    "radiograph_filename": "case_062_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11888688.1/JPBS-16-4879-g001.jpg",
+    "radiograph_caption": "Pre operative radiograph",
+    "intraoral_filename": "case_062_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC11888688.1/JPBS-16-4879-g001.jpg",
+    "intraoral_caption": "Pre operative clinical image"
+  },
+  "case_063": {
+    "case_id": "case_063",
+    "radiograph_filename": "case_063_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12239431.1/13256_2025_5380_Fig2_HTML.jpg",
+    "radiograph_caption": "A Periapical radiolucency was seen on intraoral periapical radiograph associated with regions 11 and 12.",
+    "intraoral_filename": "case_063_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC12239431.1/13256_2025_5380_Fig1_HTML.jpg",
+    "intraoral_caption": "Pus discharge and swelling in upper anterior region of the jaw"
+  },
+  "case_064": {
+    "case_id": "case_064",
+    "radiograph_filename": "case_064_radiograf.jpg",
+    "radiograph_saved": true,
+    "radiograph_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC9715368.1/rde-47-e35-g001.jpg",
+    "radiograph_caption": "Preoperative radiograph (A)",
+    "intraoral_filename": "case_064_intraoral.jpg",
+    "intraoral_saved": true,
+    "intraoral_url": "https://pmc-oa-opendata.s3.amazonaws.com/PMC9715368.1/rde-47-e35-g002.jpg",
+    "intraoral_caption": "Intraoral photograph 1 year after first microsurgery; a sinus tract appeared and was associated with the treated tooth (G)"
+  }
+}
