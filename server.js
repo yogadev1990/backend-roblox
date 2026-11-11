@@ -11,9 +11,10 @@ const PORT = process.env.PORT || 4321;
 
 app.use(bodyParser.json({ limit: '10mb' }));
 
-// Setup Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+// Setup Gemini AI (Pure 100% Gemini 2.5 Flash via v1beta)
+const geminiApiKey = process.env.API_GEMINI || process.env.GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(geminiApiKey);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1beta" });
 
 // ==========================================================
 // 1. KONEKSI DATABASE
@@ -678,21 +679,40 @@ app.post('/api/osce/check-answer', checkAuth, async (req, res) => {
                 if (pId) {
                     await User.findOneAndUpdate({ userId: String(pId) }, { $inc: { gold: 100, xp: 200 } });
                 }
-            }
 
-            return res.json({
-                status: isCorrect,
-                isFinal: isCorrect,
-                msg: isCorrect ? `✅ Diagnosis TEPAT: ${diagnosisBenar}` : `❌ Diagnosis belum tepat. Perhatikan riwayat & gambaran radiografnya kembali.`,
-                data: isCorrect ? {
-                    grade: "A",
-                    gold: 100,
-                    xp: 200,
-                    note: `Diagnosa tepat: ${diagnosisBenar}. Lakukan tatalaksana sesuai indikasi klinis.`,
-                    caseNumber: session.caseCount,
-                    kategori: activeCase.kategori_lesi
-                } : null
-            });
+                return res.json({
+                    status: true,
+                    isFinal: true,
+                    lockTablet: true,
+                    msg: `✅ Diagnosis TEPAT: ${diagnosisBenar}`,
+                    data: {
+                        grade: "A",
+                        gold: 100,
+                        xp: 200,
+                        note: `Diagnosa tepat: ${diagnosisBenar}. Lakukan tatalaksana sesuai indikasi klinis.`,
+                        caseNumber: session.caseCount,
+                        kategori: activeCase.kategori_lesi
+                    }
+                });
+            } else {
+                // PETUNJUK EDUKATIF FORMATIF (CLUE) SESUAI KASUS AKTIF
+                const kunciLower = diagnosisBenar.toLowerCase();
+                let clueText = "";
+                if (kunciLower.includes("abses")) {
+                    clueText = "Perhatikan batas lesi radiolusen periapikal pada rontgen: batasnya DIFUS / TIDAK JELAS (ill-defined). Pada klinis sering disertai nyeri berdenyut atau pembengkakan supuratif.";
+                } else if (kunciLower.includes("granuloma")) {
+                    clueText = "Perhatikan batas lesi radiolusen periapikal pada rontgen: batasnya JELAS (well-defined) namun NON-KORTIKASI (tidak memiliki garis tepi putih sklerotik). Seringkali asimtomatik.";
+                } else if (kunciLower.includes("kista")) {
+                    clueText = "Perhatikan batas lesi radiolusen periapikal pada rontgen: lesi berukuran besar, berbatas SANGAT JELAS dan dilingkari garis putih KORTIKASI/SKLEROTIK tipis (corticated/sclerotic rim).";
+                }
+
+                return res.json({
+                    status: false,
+                    isFinal: false,
+                    lockTablet: false,
+                    msg: `❌ Diagnosis Belum Tepat!\n\n💡 CLUE KLINIS & RADIOGRAFIS:\n${clueText}\n\nSilakan periksa kembali gambaran foto rontgen & klinis di kursi periksa, lalu pilih ulang diagnosis Anda.`
+                });
+            }
         } else if (tipe === "Plan") {
             // Evaluasi Rencana Perawatan (Plan) & Rapor Akhir
             let grade = "B";
@@ -800,7 +820,22 @@ app.post('/api/chat-ai', checkAuth, async (req, res) => {
         `;
 
         const result = await model.generateContent(systemPrompt + "\nDokter bertanya: " + pesan);
-        const responseAI = result.response.text();
+        let responseAI = result.response.text().trim();
+
+        // Enforce tag kelengkapan jika AI tidak menyertakan tag
+        const pLower = (pesan || "").toLowerCase();
+        if ((pLower.includes("nama") || pLower.includes("siapa")) && !responseAI.includes("[NAMA:")) {
+            responseAI += ` [NAMA:${namaPasien}]`;
+        }
+        if ((pLower.includes("umur") || pLower.includes("usia") || pLower.includes("tahun")) && !responseAI.includes("[UMUR:")) {
+            responseAI += ` [UMUR:${umurPasien}]`;
+        }
+        if ((pLower.includes("keluhan") || pLower.includes("sakit") || pLower.includes("rasa") || pLower.includes("ngilu")) && !responseAI.includes("[KELUHAN:")) {
+            const klh = patientProfile?.keluhan_utama || "Nyeri berdenyut pada gigi";
+            responseAI += ` [KELUHAN:${klh}]`;
+        }
+
+        console.log(`🤖 [GEMINI AI 2.5 FLASH] Response: ${responseAI}`);
 
         if(robloxId) {
             await User.findOneAndUpdate({ robloxId }, {
