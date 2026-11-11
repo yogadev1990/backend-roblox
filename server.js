@@ -19,9 +19,9 @@ const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersi
 // ==========================================================
 // 1. KONEKSI DATABASE
 // ==========================================================
-mongoose.connect(process.env.MONGO_URI) 
-  .then(() => console.log('✅ MongoDB Connected (Siap Tempur!)'))
-  .catch(err => console.log('❌ DB Error:', err));
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('✅ MongoDB Connected (Siap Tempur!)'))
+    .catch(err => console.log('❌ DB Error:', err));
 
 // ==========================================================
 // 2. SCHEMAS (STRUKTUR DATA STANDAR BARU)
@@ -33,7 +33,7 @@ const ItemSchema = new mongoose.Schema({
     displayName: String,
     description: String,
     icon: String,
-    category: { type: String, default: "General" }, 
+    category: { type: String, default: "General" },
     price: { type: Number, default: 0 },
     isBuyable: { type: Boolean, default: true },
     rarity: { type: String, default: "Common" }
@@ -41,12 +41,12 @@ const ItemSchema = new mongoose.Schema({
 
 // B. MASTER DATA: ACHIEVEMENT (Pencapaian)
 const AchievementSchema = new mongoose.Schema({
-    achieveId: { type: String, unique: true }, 
-    title: String,        
-    description: String,  
-    targetCount: Number,  
-    rewardGold: Number,   
-    rewardXP: Number      
+    achieveId: { type: String, unique: true },
+    title: String,
+    description: String,
+    targetCount: Number,
+    rewardGold: Number,
+    rewardXP: Number
 });
 
 // C. MASTER DATA: NPC PRESET (Tampilan Visual Pasien)
@@ -57,7 +57,7 @@ const NpcPresetSchema = new mongoose.Schema({
     pantsId: String,
     faceId: String,
     hairId: String,
-    accessoryId: String     
+    accessoryId: String
 });
 
 // D. MEDICAL CASE (STANDAR BARU DATASET 41 KASUS)
@@ -126,16 +126,16 @@ const PretestSessionSchema = new mongoose.Schema({
 
 // G. USER DATA
 const UserSchema = new mongoose.Schema({
-    userId: { type: String, required: true, unique: true }, 
+    userId: { type: String, required: true, unique: true },
     username: String,
-    robloxId: { type: String, default: null }, 
+    robloxId: { type: String, default: null },
     robloxUsername: String,
     xp: { type: Number, default: 0 },
     level: { type: Number, default: 1 },
     gold: { type: Number, default: 1000 },
-    inventory: [{ 
-        itemId: String, 
-        obtainedAt: { type: Date, default: Date.now } 
+    inventory: [{
+        itemId: String,
+        obtainedAt: { type: Date, default: Date.now }
     }],
     achievements: [{ achieveId: String, progress: Number, completed: Boolean }],
     currentSession: {
@@ -252,11 +252,11 @@ async function generateStratifiedPretest(playerUserId, robloxUsername) {
     const selectedIds = combined9.map(c => c.id);
     await PretestSession.findOneAndUpdate(
         { playerUserId },
-        { 
-            $set: { 
+        {
+            $set: {
                 robloxUsername: robloxUsername || "Player",
-                usedPretestCaseIds: selectedIds, 
-                lastUpdated: new Date() 
+                usedPretestCaseIds: selectedIds,
+                lastUpdated: new Date()
             }
         },
         { upsert: true, new: true }
@@ -272,7 +272,7 @@ async function generatePatientProfile(medicalCase) {
 
     const visualPreset = await NpcPreset.aggregate([
         { $match: { gender: gender } },
-        { $sample: { size: 1 } } 
+        { $sample: { size: 1 } }
     ]);
 
     return {
@@ -300,7 +300,7 @@ const checkAuth = (req, res, next) => {
 app.get('/api/roblox-login/:robloxId', checkAuth, async (req, res) => {
     try {
         const user = await User.findOne({ robloxId: req.params.robloxId });
-        
+
         if (user) {
             const allItems = await Item.find({});
             const itemMap = {};
@@ -317,12 +317,12 @@ app.get('/api/roblox-login/:robloxId', checkAuth, async (req, res) => {
                 };
             });
 
-            res.json({ 
-                authorized: true, 
-                username: user.username, 
-                gold: user.gold, 
-                xp: user.xp, 
-                inventory: enrichedInventory 
+            res.json({
+                authorized: true,
+                username: user.username,
+                gold: user.gold,
+                xp: user.xp,
+                inventory: enrichedInventory
             });
         } else {
             const wl = await Whitelist.findOne({ robloxId: req.params.robloxId });
@@ -680,6 +680,10 @@ app.post('/api/osce/check-answer', checkAuth, async (req, res) => {
                     await User.findOneAndUpdate({ userId: String(pId) }, { $inc: { gold: 100, xp: 200 } });
                 }
 
+                const totalSolved = await OSCELog.countDocuments({ playerUserId: pId, isDiagnosisCorrect: true });
+                const totalAttempts = await OSCELog.countDocuments({ playerUserId: pId });
+                const persentase = totalAttempts > 0 ? Math.round((totalSolved / totalAttempts) * 100) : 100;
+
                 return res.json({
                     status: true,
                     isFinal: true,
@@ -687,10 +691,12 @@ app.post('/api/osce/check-answer', checkAuth, async (req, res) => {
                     msg: `✅ Diagnosis TEPAT: ${diagnosisBenar}`,
                     data: {
                         grade: "A",
-                        gold: 100,
-                        xp: 200,
-                        note: `Diagnosa tepat: ${diagnosisBenar}. Lakukan tatalaksana sesuai indikasi klinis.`,
+                        totalSolved,
+                        totalAttempts,
+                        persentase,
+                        note: `Diagnosa tepat: ${diagnosisBenar}. Lesi periapikal teridentifikasi dengan tepat.`,
                         caseNumber: session.caseCount,
+                        blockNumber: blockIndex,
                         kategori: activeCase.kategori_lesi
                     }
                 });
@@ -781,15 +787,15 @@ app.post('/api/osce/check-answer', checkAuth, async (req, res) => {
 
 // --- [D] AI CHAT (GEMINI) ---
 app.post('/api/chat-ai', checkAuth, async (req, res) => {
-    const { robloxId, pesan, konteksPenyakit, patientProfile } = req.body; 
+    const { robloxId, pesan, konteksPenyakit, patientProfile } = req.body;
 
     try {
-        if(robloxId) {
+        if (robloxId) {
             await User.findOneAndUpdate({ robloxId }, {
-                $push: { 
+                $push: {
                     chatHistory: {
                         $each: [{ source: 'roblox', role: 'user', parts: [{ text: pesan }], timestamp: new Date() }],
-                        $slice: -20 
+                        $slice: -20
                     }
                 }
             });
@@ -837,20 +843,20 @@ app.post('/api/chat-ai', checkAuth, async (req, res) => {
 
         console.log(`🤖 [GEMINI AI 2.5 FLASH] Response: ${responseAI}`);
 
-        if(robloxId) {
+        if (robloxId) {
             await User.findOneAndUpdate({ robloxId }, {
-                $push: { 
+                $push: {
                     chatHistory: {
                         $each: [{ source: 'roblox', role: 'model', parts: [{ text: responseAI }], timestamp: new Date() }],
-                        $slice: -20 
+                        $slice: -20
                     }
                 }
             });
         }
-        
+
         res.json({ jawaban: responseAI });
 
-    } catch (error) { 
+    } catch (error) {
         console.warn("⚠️ Chat-AI fallback triggered:", error.message);
         const fallbackName = patientProfile?.name || "Pasien";
         const fallbackAge = patientProfile?.age || "25";
@@ -889,7 +895,7 @@ app.post('/api/chat-ai', checkAuth, async (req, res) => {
             tags = `[NAMA:${fallbackName}][UMUR:${fallbackAge}][KELUHAN:Nyeri dan tidak nyaman pada gigi]`;
         }
 
-        res.json({ jawaban: `${reply} ${tags}`.trim() }); 
+        res.json({ jawaban: `${reply} ${tags}`.trim() });
     }
 });
 
@@ -943,11 +949,11 @@ app.post('/api/admin/seed-cases', checkAuth, async (req, res) => {
             summary[item.kategori_lesi] = (summary[item.kategori_lesi] || 0) + 1;
         }
 
-        res.json({ 
-            success: true, 
-            total: inserted.length, 
+        res.json({
+            success: true,
+            total: inserted.length,
             summary,
-            message: "Database kasus medis berhasil dirombak dan diisi 41 kasus baru!" 
+            message: "Database kasus medis berhasil dirombak dan diisi 41 kasus baru!"
         });
     } catch (err) {
         res.status(500).json({ error: err.message });
