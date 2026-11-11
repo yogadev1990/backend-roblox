@@ -157,7 +157,7 @@ CasePool.Cases = {
         elemen_gigi = "11",
         vignette_tes = "Seorang pasien laki-laki berusia 19 tahun datang dengan keluhan gigi depan atas (elemen 11) patah dan bengkak. Pasien memiliki riwayat trauma pada gigi tersebut. Pemeriksaan klinis menunjukkan fraktur koronal kompleks dan kebersihan mulut yang buruk. Tes termal menunjukkan respon negatif, sedangkan perkusi dan palpasi positif nyeri. Radiograf periapikal menunjukkan apeks terbuka, dinding akar tipis, ruang saluran akar yang lebar, dan area radiolusen difus pada regio periapikal gigi 11, mengindikasikan adanya infeksi periradikuler dan pembengkakan mukosa periapikal fluktuatif.",
         radiograf_asset_id = "rbxassetid://116736787082201",
-        intraoral_asset_id = "rbxassetid://79850108078564"
+        intraoral_asset_id = "rbxassetid://133716650028360"
     },
     ["case_018"] = {
         id = "case_018",
