@@ -265,6 +265,51 @@ async function generateStratifiedPretest(playerUserId, robloxUsername) {
     return combined9;
 }
 
+// Generator Stratified Post-Test 9 Soal (Eksklusif dari soal Pre-Test)
+async function generateStratifiedPosttest(playerUserId, robloxUsername) {
+    const existingSession = await PretestSession.findOne({ playerUserId });
+    const usedPreIds = existingSession?.usedPretestCaseIds || [];
+    const usedPostIds = existingSession?.usedPosttestCaseIds || [];
+    const excludedIds = Array.from(new Set([...usedPreIds, ...usedPostIds]));
+
+    let [absesCases, granuCases, kistaCases] = await Promise.all([
+        MedicalCase.find({ kategori_lesi: 'abses_periapikal', id: { $nin: excludedIds } }),
+        MedicalCase.find({ kategori_lesi: 'granuloma_periapikal', id: { $nin: excludedIds } }),
+        MedicalCase.find({ kategori_lesi: 'kista_radikuler', id: { $nin: excludedIds } })
+    ]);
+
+    // Fallback jika kuota non-used kurang dari 3: izinkan exclude pretest saja
+    if (absesCases.length < 3) absesCases = await MedicalCase.find({ kategori_lesi: 'abses_periapikal', id: { $nin: usedPreIds } });
+    if (granuCases.length < 3) granuCases = await MedicalCase.find({ kategori_lesi: 'granuloma_periapikal', id: { $nin: usedPreIds } });
+    if (kistaCases.length < 3) kistaCases = await MedicalCase.find({ kategori_lesi: 'kista_radikuler', id: { $nin: usedPreIds } });
+
+    // Fallback darurat jika tetap kurang dari 3: ambil dari seluruh pool
+    if (absesCases.length < 3) absesCases = await MedicalCase.find({ kategori_lesi: 'abses_periapikal' });
+    if (granuCases.length < 3) granuCases = await MedicalCase.find({ kategori_lesi: 'granuloma_periapikal' });
+    if (kistaCases.length < 3) kistaCases = await MedicalCase.find({ kategori_lesi: 'kista_radikuler' });
+
+    const selectedAbses = sampleWithoutReplacement(absesCases, 3);
+    const selectedGranu = sampleWithoutReplacement(granuCases, 3);
+    const selectedKista = sampleWithoutReplacement(kistaCases, 3);
+
+    const combined9 = shuffleArray([...selectedAbses, ...selectedGranu, ...selectedKista]);
+
+    const selectedIds = combined9.map(c => c.id);
+    await PretestSession.findOneAndUpdate(
+        { playerUserId },
+        {
+            $set: {
+                robloxUsername: robloxUsername || "Player",
+                usedPosttestCaseIds: selectedIds,
+                lastUpdated: new Date()
+            }
+        },
+        { upsert: true, new: true }
+    );
+
+    return combined9;
+}
+
 async function generatePatientProfile(medicalCase) {
     let gender = medicalCase?.profil_pasien?.jenis_kelamin || 'Male';
     const age = medicalCase?.profil_pasien?.usia || 25;
@@ -362,6 +407,74 @@ app.post('/api/pretest/start-session', checkAuth, async (req, res) => {
         });
     } catch (err) {
         console.error("❌ Error start-pretest:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 1b. Memulai Sesi Post-Test (Ambil 9 Kasus Stratified yang Berbeda dari Pre-Test)
+app.post('/api/posttest/start-session', checkAuth, async (req, res) => {
+    try {
+        const { playerUserId, robloxUsername } = req.body;
+        if (!playerUserId) return res.status(400).json({ error: "playerUserId diperlukan" });
+
+        const cases9 = await generateStratifiedPosttest(Number(playerUserId), robloxUsername);
+
+        const formattedCases = cases9.map((c, index) => ({
+            id: c.id,
+            nomorUrut: index + 1,
+            kode_kasus: c.kode_kasus,
+            kategori_lesi: c.kategori_lesi,
+            elemen_gigi: c.elemen_gigi,
+            diagnosis_benar: c.diagnosis_benar,
+            vignette_tes: c.vignette_tes,
+            opsi_diagnosis: c.opsi_diagnosis || ["Abses Periapikal", "Granuloma Periapikal", "Kista Radikuler"],
+            assets: c.assets,
+            roblox_assets: c.roblox_assets || { radiograf_asset_id: "", intraoral_asset_id: "" }
+        }));
+
+        res.json({
+            success: true,
+            totalSoal: formattedCases.length,
+            cases: formattedCases
+        });
+    } catch (err) {
+        console.error("❌ Error start-posttest:", err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 1c. Universal Sesi Evaluasi (Mendukung mode PRETEST & POSTTEST)
+app.post('/api/evaluation/start-session', checkAuth, async (req, res) => {
+    try {
+        const { playerUserId, robloxUsername, mode } = req.body;
+        if (!playerUserId) return res.status(400).json({ error: "playerUserId diperlukan" });
+
+        const isPosttest = (mode && mode.toUpperCase() === "POSTTEST");
+        const cases9 = isPosttest
+            ? await generateStratifiedPosttest(Number(playerUserId), robloxUsername)
+            : await generateStratifiedPretest(Number(playerUserId), robloxUsername);
+
+        const formattedCases = cases9.map((c, index) => ({
+            id: c.id,
+            nomorUrut: index + 1,
+            kode_kasus: c.kode_kasus,
+            kategori_lesi: c.kategori_lesi,
+            elemen_gigi: c.elemen_gigi,
+            diagnosis_benar: c.diagnosis_benar,
+            vignette_tes: c.vignette_tes,
+            opsi_diagnosis: c.opsi_diagnosis || ["Abses Periapikal", "Granuloma Periapikal", "Kista Radikuler"],
+            assets: c.assets,
+            roblox_assets: c.roblox_assets || { radiograf_asset_id: "", intraoral_asset_id: "" }
+        }));
+
+        res.json({
+            success: true,
+            mode: isPosttest ? "POSTTEST" : "PRETEST",
+            totalSoal: formattedCases.length,
+            cases: formattedCases
+        });
+    } catch (err) {
+        console.error("❌ Error start-evaluation:", err);
         res.status(500).json({ error: err.message });
     }
 });
@@ -963,9 +1076,13 @@ app.post('/api/admin/seed-cases', checkAuth, async (req, res) => {
 // SCRIPT EXPORTER FOR STUDIO SYNC
 app.get('/api/admin/case-pool-script', (req, res) => {
     try {
-        const content = fs.readFileSync('C:/Users/Administrator/.gemini/antigravity/brain/95f4b483-5905-4b66-baba-ef68451711ed/.system_generated/steps/1072/output.txt', 'utf8');
-        res.setHeader('Content-Type', 'text/plain');
-        res.send(content);
+        const poolPath = path.join(__dirname, 'CasePool.luau');
+        if (fs.existsSync(poolPath)) {
+            const content = fs.readFileSync(poolPath, 'utf8');
+            res.setHeader('Content-Type', 'text/plain');
+            return res.send(content);
+        }
+        res.status(404).send("CasePool.luau tidak ditemukan.");
     } catch (e) {
         res.status(500).send(e.message);
     }
